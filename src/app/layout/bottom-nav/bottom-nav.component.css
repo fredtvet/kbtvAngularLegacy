@@ -1,0 +1,15 @@
+.bottom_toolbar{
+    position:fixed;
+    bottom:0px;
+    height:56px !important;
+    z-index:1;
+}
+.bottom_toolbar_button{
+    height:100%;
+    flex-grow:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+}
+  

@@ -1,0 +1,17 @@
+
+
+
+<mat-toolbar #imageToolBar class="image_toolbar p-0" color="accent" [@showHide]="toolbarHidden ? 'hide' : 'show'">
+    <button mat-icon-button aria-label="Lukk" color="warn" class="delete_fab" [mat-dialog-close]="data.id">
+        <mat-icon>delete_forever</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Lukk" color="warn" class="close_fab" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon>
+    </button>  
+</mat-toolbar>
+
+<img (click)="toggleToolBar()" src="{{ data.fileURL }}" layout-fill/>
+
+
+
+

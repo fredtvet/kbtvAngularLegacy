@@ -1,0 +1,52 @@
+<app-nested-nav
+      icon="edit"
+      title="{{this.title}}"
+      vertMenuDisabled="true"
+      (backClicked)="onNoClick()"
+    ></app-nested-nav>
+
+<form *ngIf="missionForm" class="form_container" [formGroup]="missionForm">
+  <mat-form-field>
+      <input ngx-google-places-autocomplete [options]='googleOptions' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
+       matInput placeholder="Addresse" formControlName="address" required>
+      <mat-error *ngIf="this.address.invalid">
+          Addresse er ett obligatorisk felt på maks 100 tegn.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Kontaktnummer"  formControlName="phoneNumber">
+        <mat-error *ngIf="this.phoneNumber.invalid">
+            Kontaktnummer må være mellom 4 og 12 siffer.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        placeholder="Beskrivelse"
+        formControlName="description">
+      </textarea>
+      <mat-error *ngIf="this.description.invalid">
+          Beskrivelse er på maks 400 tegn.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+            <mat-select placeholder="Oppdragsgiver" (change)="changeEmployer($event)" formControlName="employerId">
+              <mat-option *ngFor="let employer of employers" [value]="employer.id">{{ employer.name }}</mat-option>
+            </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Oppdragstype" (change)="changeType($event)" formControlName="missionTypeId">
+        <mat-option *ngFor="let type of missionTypes" [value]="type.id">{{ type.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <button (click)="onSubmit()" [disabled]="this.missionForm.invalid" mat-raised-button color="primary">Lagre</button>
+
+</form>

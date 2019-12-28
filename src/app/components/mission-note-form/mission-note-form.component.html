@@ -1,0 +1,38 @@
+<app-nested-nav
+icon="edit"
+title="{{this.headerTitle}}"
+vertMenuDisabled="true"
+(backClicked)="onNoClick()"
+></app-nested-nav>
+
+<form *ngIf="noteForm" class="form_container" [formGroup]="noteForm">
+
+    <mat-form-field>
+        <input matInput placeholder="Tittel" formControlName="title" >
+        <mat-error *ngIf="this.title.invalid">
+            Tittel er på maks 40 tegn.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          placeholder="Innhold"
+          formControlName="content"
+          required>
+        </textarea>
+        <mat-error *ngIf="this.content.invalid">
+            Innhold er ett obligatorisk felt på maks 400 tegn.
+        </mat-error>
+      </mat-form-field>
+
+
+    <mat-checkbox formControlName="pinned">Viktig?</mat-checkbox>
+
+
+
+      <button (click)="onSubmit()" [disabled]="this.noteForm.invalid" mat-raised-button color="primary">Lagre</button>
+
+</form>

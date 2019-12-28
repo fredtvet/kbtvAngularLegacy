@@ -1,0 +1,80 @@
+.active{
+  background-color:#CCC;
+}
+
+.p-0{
+  padding:0 !important;
+}
+
+.flex_center_item{
+  height:100%;
+  flex-grow:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.5rem;
+}
+
+.nav_button{
+  height:72px !important;
+  width:72px !important;
+}
+
+.action_fab{
+  position:fixed!important;
+  right:10px!important;
+  bottom:66px;
+  z-index:10;
+}
+
+.action_fab_2{
+  position:fixed!important;
+  right:10px!important;
+  bottom:116.31px;
+  z-index:10;
+}
+
+
+.activeIcon{
+  color: #FFAB00 !important;
+}
+
+.icon_150{
+  transform:scale(1.5);
+}
+
+.text-success{
+  color:#61d800;
+}
+
+.bg-success{
+  color:#61d800;
+}
+
+.form_container {
+  display: flex;
+  flex-direction: column;
+  margin:15px;
+  padding-bottom:56px;
+}
+
+.image_viewer_dialog{
+  max-width:none!important;
+}
+
+.image_viewer_dialog .mat-dialog-container{
+  background:#282828!important;
+  padding:0!important;
+}
+
+.form_dialog{
+  max-width:none!important;
+}
+
+.form_dialog .mat-dialog-container{
+  padding:0!important;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; padding-bottom:56px}
