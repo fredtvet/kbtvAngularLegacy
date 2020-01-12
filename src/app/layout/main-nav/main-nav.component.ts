@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from "@angular/router";
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-main-nav',
@@ -11,10 +12,7 @@ import { Router } from "@angular/router";
 })
 export class MainNavComponent {
 
-  enableSearchButton: boolean;
-
   @Input() inputPlaceholder: string = "Søk";
-  @Output() searched = new EventEmitter();
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -22,11 +20,12 @@ export class MainNavComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, private _userService: UserService, private router: Router) {}
 
-  handleSearch(searchInput: string){
-      this.searched.emit(searchInput);
+  handleLogout(){
+    this._userService.purgeAuth();
+    this.router.navigate(['/login']);
   }
-  
+
 
 }

@@ -7,7 +7,7 @@
     </app-nav-list-item>
 </mat-nav-list>
 
-<button (click)="createMission()" color="primary"
+<button (click)="createMission()" color="primary" *ifRole="['Leder', 'Mellomleder']"
         mat-mini-fab aria-label="ny"
         class="action_fab"
         style="bottom:111px!important">

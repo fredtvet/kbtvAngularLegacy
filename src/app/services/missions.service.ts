@@ -17,7 +17,7 @@ export class MissionsService {
   addMission(mission: any)
   {
     return this.http
-            .post<number>(`${this.uri}`, mission, {headers: { 'Content-Type': 'application/json'}});
+            .post<number>(`${this.uri}`, mission);
 
   }
 
@@ -49,7 +49,7 @@ export class MissionsService {
   {
     return this
             .http
-            .put<boolean>(`${this.uri}/${mission.id}`, mission, {headers: { 'Content-Type': 'application/json'}});
+            .put<boolean>(`${this.uri}/${mission.id}`, mission);
   }
 
   deleteMission(id) {

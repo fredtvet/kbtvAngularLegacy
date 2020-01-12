@@ -9,6 +9,7 @@ import { ConfirmDeleteDialogComponent } from 'src/app/components/confirm-delete-
 import { MissionFormComponent } from 'src/app/components/mission-form/mission-form.component';
 import { MissionNoteFormComponent } from 'src/app/components/mission-note-form/mission-note-form.component';
 import { MissionNotesService } from 'src/app/services/mission-notes.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -52,7 +53,6 @@ export class MissionDetailsComponent {
       error => console.log("Error: ", error),
       () =>  this.mission.address = this.mission.address.replace(", Norge","").replace(/,/g, ";")
     );
-
   }
 
 

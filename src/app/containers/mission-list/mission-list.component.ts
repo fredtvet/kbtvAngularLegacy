@@ -6,6 +6,7 @@ import { NgEventBus } from 'ng-event-bus';
 import { MatDialog } from '@angular/material';
 import { MissionFormComponent } from 'src/app/components/mission-form/mission-form.component';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-mission-list',

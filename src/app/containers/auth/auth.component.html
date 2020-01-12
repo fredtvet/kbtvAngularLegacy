@@ -1,0 +1,31 @@
+
+        <form [formGroup]="authForm" (ngSubmit)="submitForm()" class="authForm">
+          <img src="assets/android-chrome-144x144.png" class="m-4" style="width:120px;height:120px" />
+
+          <fieldset [disabled]="isSubmitting">
+            <mat-form-field>
+              <mat-icon matSuffix color="primary">person</mat-icon>
+              <input matInput color="primary"
+                formControlName="Username"
+                placeholder="Brukernavn"
+                type="text" />
+              </mat-form-field>
+            <mat-form-field>
+              <mat-icon matSuffix color="primary">vpn_key</mat-icon>
+              <input matInput color="primary"
+                formControlName="Password"
+                placeholder="Passord"
+                type="password" />
+            </mat-form-field>
+          </fieldset>
+          <button mat-raised-button color="primary" [disabled]="!authForm.valid" type="submit">
+            Logg inn
+          </button>
+
+          <mat-error *ngIf="error" class="mt-4">
+            {{ error.message }}
+          </mat-error>
+
+        </form>
+
+

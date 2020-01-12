@@ -1,36 +1,36 @@
 <mat-toolbar color="primary" class=" p-0">
 
         <mat-toolbar-row class="p-0" style="height:auto!important">
-          
+
             <button (click)="handleBackClicked()"
             style="margin-right:auto;" mat-icon-button aria-label="Tilbake">
-                <mat-icon class="icon_150">chevron_left</mat-icon>   
+                <mat-icon class="icon_150">chevron_left</mat-icon>
             </button>
-      
-              <button *ngIf="!vertMenuDisabled" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Mer">
+
+              <button *ifRole="['Leder']" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Mer">
                 <mat-icon>more_vert</mat-icon>
               </button>
 
               <mat-menu #menu="matMenu">
-      
+
                 <button mat-menu-item (click)="handleEditClicked()">
                   <mat-icon>edit</mat-icon>
                   <span>Rediger</span>
                 </button>
-      
+
                 <button mat-menu-item (click)="handleDeleteClicked()">
                   <mat-icon>delete_forever</mat-icon>
                   <span>Slett</span>
                 </button>
-      
+
               </mat-menu>
-      
+
         </mat-toolbar-row>
-      
+
         <mat-toolbar-row style="height:auto!important;padding-left:40px">
-            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>  &nbsp; 
+            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>  &nbsp;
             <span class="nested_nav_title" [innerHTML]="title">
             </span>
         </mat-toolbar-row>
-      
+
       </mat-toolbar>

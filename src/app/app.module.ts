@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule,Routes } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { MissionFormComponent } from './components/mission-form/mission-form.com
 
 import { LayoutModule } from '@angular/cdk/layout';
 
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
@@ -39,6 +40,14 @@ import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog
 import { ImageListComponent }  from './components/image-list/image-list.component';
 
 import { ImageRowPipe } from './pipes/image-row.pipe';
+import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
+import { JwtService } from './services/jwt.service';
+import { UserService } from './services/user.service';
+import { ApiService } from './services/api.service';
+import { AuthGuard } from './services/auth-guard.service';
+import { AuthComponent } from './containers/auth/auth.component';
+import { NoAuthGuard } from './containers/auth/no-auth-guard.service';
+import { IfRoleDirective } from './directives/if-role.directive';
 
 
 
@@ -48,11 +57,12 @@ const routes: Routes = [
   path: '',
   component: MainNavComponent,
   pathMatch: 'full',
+  canActivate: [AuthGuard],
   children:[
     {
       path: '',
       component: MissionListComponent,
-      outlet: 'mainNavContent'
+      outlet: 'mainNavContent',
     },
     {
       path: '',
@@ -70,6 +80,7 @@ const routes: Routes = [
   path: 'oppdrag',
   component: MainNavComponent,
   pathMatch: 'full',
+  canActivate: [AuthGuard],
   children:[
     {
       path: '',
@@ -89,33 +100,20 @@ const routes: Routes = [
   ]
 },
 {
-  path: 'oppdrag/ny',
-  component: MissionFormComponent,
-  pathMatch: 'full',
-},
-{
-  path: 'oppdrag/:id/rediger',
-  component: MissionFormComponent,
-  pathMatch: 'full',
-},
-{
   path: 'oppdrag/:id/detaljer',
   component: MissionDetailsComponent,
   pathMatch: 'full',
-},
-{
-  path: 'oppdrag/:missionId/notater/ny',
-  component: MissionNoteFormComponent,
-  pathMatch: 'full',
+  canActivate: [AuthGuard],
 },
 {
   path: 'oppdrag/:missionId/notater/:id',
   component: MissionNoteDetailsComponent,
   pathMatch: 'full',
+  canActivate: [AuthGuard],
 },
 {
-  path: 'oppdrag/:missionId/notater/:id/rediger',
-  component: MissionNoteFormComponent,
+  path: 'login',
+  component: AuthComponent,
   pathMatch: 'full',
 },
 ]
@@ -139,7 +137,9 @@ const routes: Routes = [
     ImageRowPipe,
     ImageViewerDialogComponent,
     ConfirmDeleteDialogComponent,
-    ImageListComponent
+    ImageListComponent,
+    AuthComponent,
+    IfRoleDirective
   ],
   entryComponents: [ ImageViewerDialogComponent, ConfirmDeleteDialogComponent, MissionFormComponent, MissionNoteFormComponent ],
   imports: [
@@ -154,10 +154,16 @@ const routes: Routes = [
     GooglePlaceModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
     MissionsService,
     MissionTypesService,
     EmployersService,
     MissionImagesService,
+    JwtService,
+    UserService,
+    AuthGuard,
+    NoAuthGuard,
+    ApiService,
     NgEventBus
   ],
   bootstrap: [AppComponent]
