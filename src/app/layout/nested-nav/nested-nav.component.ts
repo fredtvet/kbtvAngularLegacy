@@ -7,7 +7,8 @@ import { Component,Input, Output, EventEmitter } from '@angular/core';
 })
 export class NestedNavComponent {
 
-  @Input() vertMenuDisabled:boolean = false;
+  @Input() editEnabled:boolean = false;
+  @Input() deleteEnabled:boolean = false;
   @Input() title:string;
   @Input() icon:string;
 

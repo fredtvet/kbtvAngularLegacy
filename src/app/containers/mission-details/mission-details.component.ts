@@ -10,6 +10,7 @@ import { MissionFormComponent } from 'src/app/components/mission-form/mission-fo
 import { MissionNoteFormComponent } from 'src/app/components/mission-note-form/mission-note-form.component';
 import { MissionNotesService } from 'src/app/services/mission-notes.service';
 import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -39,7 +40,8 @@ export class MissionDetailsComponent {
     private _missionNotesService: MissionNotesService,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog) {}
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar) {}
 
   ngOnInit(){
 
@@ -59,11 +61,9 @@ export class MissionDetailsComponent {
   uploadFiles(files: FileList){
     this.filesToUpload = files;
     this._imagesService.uploadImages(this.missionId, files).subscribe(
-      result => {
-        this.mission.missionImages = this.mission.missionImages.concat(result);
-      },
-      error => console.log(error),
-      () => console.log("Uploaded", this.mission.missionImages)
+      result => this.mission.missionImages = this.mission.missionImages.concat(result),
+      error => this.openSnackBar('Mislykket! Noe gikk feil.'),
+      () => this.openSnackBar(`Vellykket! ${files.length} bilde(r) lastet opp.`)
       );
   }
 
@@ -74,6 +74,7 @@ export class MissionDetailsComponent {
       if(res){
         this._missionsService.deleteMission(this.missionId);
         this.onBack();
+        this.openSnackBar('Vellykket! Oppdrag slettet.')
       }
     });
   }
@@ -92,17 +93,17 @@ export class MissionDetailsComponent {
     });
 
     dialogRef.afterClosed().subscribe(res => {
-      console.log(res);
       if(res){
         this._missionsService.updateMission(res)
-        .subscribe(success => {
-          if(success){
-            this.mission.address = res.address.replace(", Norge","").replace(/,/g, ";");
-            this.mission.phoneNumber = res.phoneNumber;
-            this.mission.description = res.description;
-          }});
-      }
-    });
+        .subscribe(
+          success => {
+              this.mission.address = res.address.replace(", Norge","").replace(/,/g, ";");
+              this.mission.phoneNumber = res.phoneNumber;
+              this.mission.description = res.description;
+              this.openSnackBar('Vellykket oppdatering!');
+          },
+          error => this.openSnackBar('Mislykket! Noe gikk feil.')
+      )}});
   }
 
   createMissionNote(){
@@ -126,6 +127,7 @@ export class MissionDetailsComponent {
   deleteImage(id){
     this._imagesService.deleteImage(this.missionId, id).subscribe(res => console.log(res));
     this.mission.missionImages = this.mission.missionImages.filter(val => val.id != id);
+    this.openSnackBar('Vellykket! Bilde slettet');
   }
 
   pinnedNotes(pinned: boolean){
@@ -144,4 +146,12 @@ export class MissionDetailsComponent {
   trackByFn(index:number, missionImage:any): number {
     return missionImage.id;
   }
+
+  openSnackBar(message: string){
+    this._snackBar.open(message, 'lukk', {
+      duration: 3000,
+      panelClass: 'toolbar_margin'
+    });
+  }
+
 }

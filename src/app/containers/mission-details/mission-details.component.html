@@ -1,6 +1,8 @@
 <app-nested-nav
     *ngIf="mission"
     title="{{ mission.address }}"
+    editEnabled=true,
+    deleteEnabled=true,
     (deleteClicked)="deleteMission()"
     (editClicked)="editMission()"
     (backClicked)="onBack()"

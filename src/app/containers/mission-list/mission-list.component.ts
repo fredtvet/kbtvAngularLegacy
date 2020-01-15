@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { MissionFormComponent } from 'src/app/components/mission-form/mission-form.component';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-mission-list',
@@ -22,7 +23,12 @@ export class MissionListComponent implements OnInit {
 
   private searchString: string = "";
 
-  constructor(private _missionsService: MissionsService, private _eventBus: NgEventBus, public dialog: MatDialog, private _router: Router) {}
+  constructor(
+    private _missionsService: MissionsService,
+    private _eventBus: NgEventBus,
+    public dialog: MatDialog,
+    private _router: Router,
+    private _snackBar: MatSnackBar) {}
 
   ngOnInit(){
     this.routeSub = this._missionsService.getMissionsPaginated().subscribe(
@@ -55,10 +61,20 @@ export class MissionListComponent implements OnInit {
       console.log(mission);
       if(mission){
         this._missionsService.addMission(mission)
-        .subscribe(id => this._router.navigate(['oppdrag', id, 'detaljer']));
+        .subscribe(
+          id => this._router.navigate(['oppdrag', id, 'detaljer']),
+          error => this.openSnackBar('Mislykket! Noe gikk feil.')
+        );
       }
     });
 
+  }
+
+  openSnackBar(message: string){
+    this._snackBar.open(message, 'lukk', {
+      duration: 3000,
+      panelClass: 'toolbar_margin'
+    });
   }
 
   ngOnDestroy(){

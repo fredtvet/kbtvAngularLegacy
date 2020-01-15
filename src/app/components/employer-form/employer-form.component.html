@@ -1,0 +1,34 @@
+<app-nested-nav
+      [icon]="this.isEditForm ? 'edit' : 'add'"
+      [title]="this.title"
+      [deleteEnabled]="this.isEditForm"
+      (deleteClicked)="deleteEmployer()"
+      (backClicked)="onNoClick()"
+></app-nested-nav>
+
+<form *ngIf="employerForm" class="form_container" [formGroup]="employerForm">
+
+    <mat-form-field>
+        <input matInput placeholder="Navn"  formControlName="name" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Kontaktnummer"  formControlName="phoneNumber">
+      <mat-error *ngIf="this.phoneNumber.invalid">
+          Kontaktnummer må være mellom 4 og 12 siffer.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input ngx-google-places-autocomplete [options]='googleOptions' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
+       matInput placeholder="Addresse" formControlName="address">
+      <mat-error *ngIf="this.address.invalid">
+          Addresse kan maks ha 100 tegn.
+      </mat-error>
+    </mat-form-field>
+
+    <button (click)="onSubmit()" [disabled]="this.employerForm.invalid" mat-raised-button color="primary">Lagre</button>
+
+</form>
+
+

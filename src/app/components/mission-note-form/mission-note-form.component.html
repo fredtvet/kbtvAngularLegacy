@@ -1,13 +1,12 @@
 <app-nested-nav
 icon="edit"
 title="{{this.headerTitle}}"
-vertMenuDisabled="true"
 (backClicked)="onNoClick()"
 ></app-nested-nav>
 
 <form *ngIf="noteForm" class="form_container" [formGroup]="noteForm">
 
-    <mat-form-field>
+      <mat-form-field>
         <input matInput placeholder="Tittel" formControlName="title" >
         <mat-error *ngIf="this.title.invalid">
             Tittel er på maks 40 tegn.

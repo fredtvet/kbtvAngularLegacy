@@ -24,6 +24,7 @@ import { MissionDetailsComponent } from './containers/mission-details/mission-de
 import { MissionsService } from 'src/app/services/missions.service';
 import { MissionTypesService } from 'src/app/services/mission-types.service';
 import { EmployersService } from 'src/app/services/employers.service';
+import { EmployeesService } from 'src/app/services/employees.service';
 import { MissionImagesService } from 'src/app/services/mission-images.service';
 
 import { MainNavComponent } from './layout/main-nav/main-nav.component';
@@ -48,6 +49,15 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AuthComponent } from './containers/auth/auth.component';
 import { NoAuthGuard } from './containers/auth/no-auth-guard.service';
 import { IfRoleDirective } from './directives/if-role.directive';
+import { HomeComponent } from './containers/home/home.component';
+import { EmployerListComponent } from './containers/employer-list/employer-list.component';
+import { EmployeeListComponent } from './containers/employee-list/employee-list.component';
+import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
+import { RolesService } from './services/roles.service';
+import { EmployerFormComponent } from './components/employer-form/employer-form.component';
+import { ProfileComponent } from './containers/profile/profile.component';
+import { ProfileFormComponent } from './components/profile-form/profile-form.component';
+import { PasswordFormComponent } from './components/password-form/password-form.component';
 
 
 
@@ -55,24 +65,78 @@ import { IfRoleDirective } from './directives/if-role.directive';
 const routes: Routes = [
 {
   path: '',
+  redirectTo: 'hjem',
+  pathMatch: 'full'
+},
+{
+  path: 'hjem',
   component: MainNavComponent,
   pathMatch: 'full',
   canActivate: [AuthGuard],
   children:[
     {
       path: '',
-      component: MissionListComponent,
+      component: HomeComponent,
       outlet: 'mainNavContent',
     },
     {
       path: '',
       component: BottomNavComponent,
       outlet: 'mainNavBotNav'
+    }
+  ]
+},
+{
+  path: 'profil',
+  component: MainNavComponent,
+  pathMatch: 'full',
+  canActivate: [AuthGuard],
+  children:[
+    {
+      path: '',
+      component: ProfileComponent,
+      outlet: 'mainNavContent',
     },
     {
       path: '',
-      component: SearchBarComponent,
-      outlet: 'mainNavSearchBar'
+      component: BottomNavComponent,
+      outlet: 'mainNavBotNav'
+    }
+  ]
+},
+{
+  path: 'oppdragsgivere',
+  component: MainNavComponent,
+  pathMatch: 'full',
+  canActivate: [AuthGuard],
+  children:[
+    {
+      path: '',
+      component: EmployerListComponent,
+      outlet: 'mainNavContent',
+    },
+    {
+      path: '',
+      component: BottomNavComponent,
+      outlet: 'mainNavBotNav'
+    }
+  ]
+},
+{
+  path: 'ansatte',
+  component: MainNavComponent,
+  pathMatch: 'full',
+  canActivate: [AuthGuard],
+  children:[
+    {
+      path: '',
+      component: EmployeeListComponent,
+      outlet: 'mainNavContent',
+    },
+    {
+      path: '',
+      component: BottomNavComponent,
+      outlet: 'mainNavBotNav'
     }
   ]
 },
@@ -139,9 +203,23 @@ const routes: Routes = [
     ConfirmDeleteDialogComponent,
     ImageListComponent,
     AuthComponent,
-    IfRoleDirective
+    IfRoleDirective,
+    HomeComponent,
+    EmployerListComponent,
+    EmployeeListComponent,
+    EmployeeFormComponent,
+    EmployerFormComponent,
+    ProfileComponent,
+    ProfileFormComponent,
+    PasswordFormComponent
   ],
-  entryComponents: [ ImageViewerDialogComponent, ConfirmDeleteDialogComponent, MissionFormComponent, MissionNoteFormComponent ],
+  entryComponents: [
+    ImageViewerDialogComponent,
+    ConfirmDeleteDialogComponent,
+    MissionFormComponent,
+    MissionNoteFormComponent,
+    EmployeeFormComponent,
+    EmployerFormComponent, ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
@@ -158,7 +236,9 @@ const routes: Routes = [
     MissionsService,
     MissionTypesService,
     EmployersService,
+    EmployeesService,
     MissionImagesService,
+    RolesService,
     JwtService,
     UserService,
     AuthGuard,

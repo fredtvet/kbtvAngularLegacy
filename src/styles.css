@@ -6,6 +6,10 @@
   padding:0 !important;
 }
 
+.toolbar_margin{
+  margin-bottom: 66px !important;
+}
+
 .flex_center_item{
   height:100%;
   flex-grow:1;

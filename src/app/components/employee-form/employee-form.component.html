@@ -1,0 +1,51 @@
+<app-nested-nav
+      [icon]="this.isEditForm ? 'edit' : 'person_add'"
+      [title]="this.title"
+      [deleteEnabled]="this.isEditForm"
+      (deleteClicked)="deleteEmployee()"
+      (backClicked)="onNoClick()"
+></app-nested-nav>
+
+<form *ngIf="employeeForm" class="form_container" [formGroup]="employeeForm">
+
+    <mat-form-field>
+        <input matInput placeholder="Brukernavn"  formControlName="userName" required>
+    </mat-form-field>
+
+    <mat-form-field [ngClass]="{'hideInput': isEditForm}">
+      <input matInput placeholder="Passord"  formControlName="password" required>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Fornavn"  formControlName="firstName" required>
+        <mat-error *ngIf="this.firstName.invalid">
+            Kontaktnummer må være mellom 4 og 12 siffer.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Etternavn"  formControlName="lastName" required>
+        <mat-error *ngIf="this.lastName.invalid">
+            Kontaktnummer må være mellom 4 og 12 siffer.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Rolle" (change)="changeRole($event)" formControlName="role" required>
+        <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Kontaktnummer"  formControlName="phoneNumber">
+        <mat-error *ngIf="this.phoneNumber.invalid">
+            Kontaktnummer må være mellom 4 og 12 siffer.
+        </mat-error>
+    </mat-form-field>
+
+
+
+    <button (click)="onSubmit()" [disabled]="this.employeeForm.invalid" mat-raised-button color="primary">Lagre</button>
+
+</form>
+

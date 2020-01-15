@@ -5,20 +5,21 @@
           <fieldset [disabled]="isSubmitting">
             <mat-form-field>
               <mat-icon matSuffix color="primary">person</mat-icon>
-              <input matInput color="primary"
+              <input matInput
                 formControlName="Username"
                 placeholder="Brukernavn"
                 type="text" />
-              </mat-form-field>
+            </mat-form-field><br />
             <mat-form-field>
               <mat-icon matSuffix color="primary">vpn_key</mat-icon>
-              <input matInput color="primary"
+              <input matInput
                 formControlName="Password"
                 placeholder="Passord"
                 type="password" />
             </mat-form-field>
           </fieldset>
           <button mat-raised-button color="primary" [disabled]="!authForm.valid" type="submit">
+            <mat-icon>lock_open</mat-icon>
             Logg inn
           </button>
 

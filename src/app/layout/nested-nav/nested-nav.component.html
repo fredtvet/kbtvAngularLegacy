@@ -7,18 +7,21 @@
                 <mat-icon class="icon_150">chevron_left</mat-icon>
             </button>
 
-              <button *ifRole="['Leder']" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Mer">
+            <ng-container *ngIf="editEnabled || deleteEnabled">
+              <button  *ifRole="['Leder']" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Mer">
                 <mat-icon>more_vert</mat-icon>
               </button>
+            </ng-container>
+
 
               <mat-menu #menu="matMenu">
 
-                <button mat-menu-item (click)="handleEditClicked()">
+                <button mat-menu-item (click)="handleEditClicked()" *ngIf="editEnabled">
                   <mat-icon>edit</mat-icon>
                   <span>Rediger</span>
                 </button>
 
-                <button mat-menu-item (click)="handleDeleteClicked()">
+                <button  mat-menu-item (click)="handleDeleteClicked()" *ngIf="deleteEnabled">
                   <mat-icon>delete_forever</mat-icon>
                   <span>Slett</span>
                 </button>

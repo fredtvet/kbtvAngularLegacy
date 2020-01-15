@@ -6,9 +6,15 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar color="primary">Meny</mat-toolbar>
     <mat-nav-list>
-        <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/']" [routerLinkActive]="['active']">Hjem</a>
+        <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/hjem']" [routerLinkActive]="['active']">Hjem</a>
         <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/oppdrag']" [routerLinkActive]="['active']">Oppdrag</a>
-        <a mat-list-item (click)="handleLogout()">Logg ut</a>
+        <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/oppdragsgivere']" [routerLinkActive]="['active']">Oppdragsgivere</a>
+        <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/ansatte']" [routerLinkActive]="['active']">Ansatte</a>
+        <span style="position:absolute;bottom:0;width:100%">
+          <a mat-list-item (click)="drawer.toggle()" [routerLink]="['/profil']" [routerLinkActive]="['active']">Profil</a>
+          <a mat-list-item (click)="handleLogout()">Logg ut</a>
+        </span>
+
     </mat-nav-list>
   </mat-sidenav>
 
@@ -25,7 +31,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
 
-      <span style="margin-right:auto">Bj Bygg & Eiendom</span>
+      <span style="margin-right:auto" [routerLink]="['/hjem']">Bj Bygg & Eiendom</span>
 
       <router-outlet name="mainNavSearchBar"></router-outlet>
 

@@ -1,0 +1,40 @@
+<mat-list *ngIf="employees">
+  <ng-container *ngFor="let employee of employees">
+    <mat-list-item *ngIf="employee.role == 'Leder'">
+      <mat-icon mat-list-icon>person</mat-icon>
+      <h4 mat-line><b>{{employee.firstName}} {{employee.lastName}}</b></h4>
+      <p mat-line> {{employee.phoneNumber || 'Ingen kontaktnummer'}} </p>
+      <p mat-line> {{employee.role}} </p>
+    </mat-list-item>
+  </ng-container>
+  <ng-container *ngFor="let employee of employees">
+    <mat-list-item *ngIf="employee.role == 'Mellomleder'">
+      <mat-icon mat-list-icon>person</mat-icon>
+      <h4 mat-line><b>{{employee.firstName}} {{employee.lastName}}</b></h4>
+      <p mat-line> {{employee.phoneNumber || 'Ingen kontaktnummer' }} </p>
+      <p mat-line> {{employee.role}} </p>
+      <button *ifRole="['Leder']" (click)="openEditDialog(employee)" mat-icon-button aria-label="Rediger">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-list-item>
+  </ng-container>
+  <ng-container *ngFor="let employee of employees">
+    <mat-list-item *ngIf="employee.role == 'Ansatt'" >
+      <mat-icon mat-list-icon>person</mat-icon>
+      <h4 mat-line><b>{{employee.firstName}} {{employee.lastName}}</b></h4>
+      <p mat-line> {{employee.phoneNumber || 'Ingen kontaktnummer'}} </p>
+      <p mat-line> {{employee.role}} </p>
+      <button *ifRole="['Leder']" (click)="openEditDialog(employee)" mat-icon-button aria-label="Rediger">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-list-item>
+  </ng-container>
+</mat-list>
+
+<button color="primary"
+    mat-mini-fab aria-label="ny"
+    class="action_fab"
+    *ifRole="['Leder']"
+    (click)="openCreateDialog()">
+    <mat-icon color="accent">person_add</mat-icon>
+</button>

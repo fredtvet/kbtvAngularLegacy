@@ -6,6 +6,7 @@ import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { User } from '../models/user.model';
 import { map ,  distinctUntilChanged } from 'rxjs/operators';
+import { Employee } from '../models/employee.model';
 
 
 @Injectable()
@@ -23,25 +24,10 @@ export class UserService {
     private jwtService: JwtService
   ) {}
 
-  // Verify JWT in localstorage with server & load user's info.
-  // This runs once on application startup.
-  populate() {
-    // If JWT detected, attempt to get & store user's info
-    if (this.jwtService.getToken()) {
-      this.apiService.get('/auth')
-      .subscribe(
-        data => this.setAuth(data.user),
-        err => this.purgeAuth()
-      );
-    } else {
-      // Remove any potential remnants of previous auth states
-      this.purgeAuth();
-    }
-  }
 
   setAuth(user: User) {
     // Save JWT sent from server in localstorage
-    this.jwtService.saveToken(user.token);
+    this.jwtService.saveToken(user.token.replace("Bearer ", ""));
     // Set current user data into observable
     this.currentUserSubject.next(user);
     // Set isAuthenticated to true
@@ -72,8 +58,8 @@ export class UserService {
     ));
   }
 
-  getCurrentUser(): User {
-    return this.currentUserSubject.value;
+  getCurrentUser(): any{
+    return this.apiService.get('/auth');
   }
 
   getUserRole():string{
@@ -95,15 +81,21 @@ export class UserService {
     return true;
   }
 
-  // Update the user on the server (email, pass, etc)
-  update(user): Observable<User> {
+  updateCurrentUser(user: any)
+  {
     return this.apiService
-    .put('/user', { user })
-    .pipe(map(data => {
-      // Update the currentUser observable
-      this.currentUserSubject.next(data.user);
-      return data.user;
-    }));
+    .put('/auth', user);
+  }
+
+  changePassword(oldPw: string, newPw: string){
+
+    const obj = {
+      OldPassword: oldPw,
+      NewPassword: newPw
+    }
+
+    return this.apiService
+    .put('/auth/changePassword', obj);
   }
 
 }

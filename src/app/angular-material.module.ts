@@ -83,7 +83,7 @@ import {
       MatDialogModule
    ],
    providers: [
-      MatDatepickerModule,
+      MatDatepickerModule
    ]
 })
 

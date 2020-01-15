@@ -13,18 +13,11 @@ export class EmployersService {
 
   constructor(private http: HttpClient) {this.uri = environment.apiUrl + '/Employers'}
 
-  addEmployer(Name: string, PhoneNumber: string, Address: string)
+  addEmployer(employer: any)
   {
-    const obj = {
-      Name,
-      PhoneNumber,
-      Address
-    };
-
     return this
             .http
-            .post(`${this.uri}`, obj)
-            .subscribe(res => console.log('Creation Complete'));
+            .post(`${this.uri}`, employer);
   }
 
   getEmployers() {
@@ -33,18 +26,11 @@ export class EmployersService {
         .get<Employer[]>(`${this.uri}`);
   }
 
-  updateEmployer(Name: string, PhoneNumber: string, Address: string, id)
+  updateEmployer(employer: any)
   {
-    const obj = {
-      Name,
-      PhoneNumber,
-      Address
-    };
-
     return this
             .http
-            .put(`${this.uri}/${id}`, obj)
-            .subscribe(res => console.log('Creation Complete'));
+            .put(`${this.uri}/${employer.id}`, employer);
   }
 
   deleteEmployer(id) {
